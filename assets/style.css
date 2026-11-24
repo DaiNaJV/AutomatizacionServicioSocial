@@ -144,7 +144,7 @@ p{margin:0}
 .form{display:grid; gap:14px}
 .form.cols{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
 .form .span{grid-column:1/-1}
-label.field{display:grid; gap:6px; font-size:13.5px; font-weight:600}
+label.field,div.field{display:grid; gap:6px; font-size:13.5px; font-weight:600}
 label.field .hint{font-weight:400; color:var(--muted); font-size:12.5px}
 input:not([type=file]),select,textarea{
   width:100%; padding:10px 12px; border:1px solid #BCC3D0; border-radius:var(--r-sm);
@@ -390,4 +390,61 @@ td small{display:block; color:var(--muted); font-size:13px}
   .tabs,.topbar .who,.foot,#toasts{display:none}
   body{background:#fff}
   .folder-wrap{background:none;border:none;padding:0}
+}
+
+/* ---------- Automatización ---------- */
+.reqs{list-style:none; margin:10px 0 0; padding:0; display:grid; gap:6px; font-size:13.5px}
+.reqs li{display:grid; grid-template-columns:16px 1fr; gap:6px; color:var(--muted)}
+.reqs li.ok{color:var(--ink)}
+.reqs li > span:first-child{font-weight:700}
+.reqs li.ok > span:first-child{color:var(--ok)}
+.reqs small{display:block; color:var(--muted); font-size:12.5px}
+.stage .state{font-variant-numeric:tabular-nums}
+
+.checks{list-style:none; margin:8px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:4px 14px; font-size:12.5px; color:var(--muted)}
+.checks li{display:flex; gap:5px; align-items:baseline}
+.checks li.ok span{color:var(--ok); font-weight:700}
+.checks li.no{color:var(--bad)}
+.checks li.no span{font-weight:700}
+
+.flag{display:inline-block; font-size:12px; font-weight:600; color:var(--warn); background:#FBF1E2; padding:2px 8px; border-radius:10px; margin-top:4px}
+td .flag{display:block; width:max-content; margin-top:8px}
+
+.release{
+  margin-top:24px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  border:2px solid var(--ok); background:color-mix(in srgb, var(--ok) 6%, transparent); border-radius:var(--r-md); padding:18px 20px;
+}
+.release p{color:var(--muted); margin-top:4px}
+.big-frac{font-size:16px}
+.big-frac b{font:800 34px/1 var(--display); margin-right:4px}
+
+.auto-meter{
+  display:grid; grid-template-columns:auto 1fr; gap:6px 24px; align-items:center;
+  border:1px solid var(--rule); border-radius:var(--r-md); padding:18px 20px; background:var(--paper);
+}
+.auto-meter > div:first-child b{font:800 40px/1 var(--display); color:var(--stamp); display:block}
+.auto-meter > div:first-child span{font-size:13.5px; color:var(--muted)}
+.meter{height:14px; border-radius:7px; background:var(--sheet); border:1px solid var(--rule); overflow:hidden}
+.meter span{display:block; height:100%; background:var(--stamp)}
+.auto-meter p{grid-column:2; font-size:13.5px; color:var(--muted)}
+
+.notices{list-style:none; margin:0; padding:0; border-top:1px solid var(--rule)}
+.notices li{display:flex; justify-content:space-between; gap:16px; align-items:center; padding:14px 0 14px 16px; border-bottom:1px solid var(--rule); position:relative}
+.notices li.unread::before{content:""; position:absolute; left:0; top:20px; width:8px; height:8px; border-radius:50%; background:var(--stamp)}
+.notices li.unread b{font-weight:700}
+.notices b{font-weight:500; display:block}
+.notices small{color:var(--muted); font-size:13px}
+.notices a{font-weight:600; white-space:nowrap}
+
+details.mini summary{cursor:pointer; color:var(--stamp); font-size:13px; font-weight:600; margin-top:4px}
+details.mini .stages{grid-template-columns:1fr; margin-top:8px; min-width:240px}
+details.mini .stage{padding:10px 12px; border-right:none; border-bottom:1px solid var(--rule)}
+details.mini .stage .n{display:none}
+details.mini .stage .state{top:10px; right:12px}
+details.mini .stage h3{font-size:14px}
+
+.log li.auto::before{background:var(--stamp)}
+@media (max-width:680px){
+  .auto-meter{grid-template-columns:1fr}
+  .auto-meter p{grid-column:1}
 }

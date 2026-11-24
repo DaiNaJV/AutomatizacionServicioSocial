@@ -27,28 +27,38 @@ Para probarlo en tu computadora basta con abrir `index.html` en el navegador, o 
 
 Todas usan la contraseña `password`. En la pantalla de acceso puedes tocar una cuenta para llenar el formulario.
 
-| Rol | Correo | Qué puede hacer |
+| Cuenta | Correo | Para qué sirve en la demo |
 |---|---|---|
-| Estudiante | alumno@demo.local | Ver su expediente y horas, entregar y corregir documentos, enviar reportes bimestrales |
-| Supervisión | supervisor@demo.local | Consultar expedientes, descargar documentos y validarlos, observarlos o rechazarlos |
-| Administración | admin@demo.local | Todo lo anterior, registrar estudiantes, aprobar documentos oficialmente y liberar expedientes |
+| Ana (estudiante) | alumno@demo.local | Está en Desarrollo con 120 horas y un documento observado por el sistema |
+| Jorge (estudiante) | jorge@demo.local | Le falta solo la carta de terminación: al entregarla se libera solo y descarga su constancia |
+| Supervisión | supervisor@demo.local | Atiende solo las excepciones |
+| Administración | admin@demo.local | Registra estudiantes, ve el porcentaje de decisiones automáticas y puede liberar manualmente un caso especial |
 
-Los estudiantes que registre Administración entran con el correo y la contraseña temporal que se les asignó.
+## Automatización del proceso
 
-## Funcionalidades
+Un motor de reglas (`runEngine` en `assets/app.js`) corre al abrir la página y después de cada acción. Sin intervención humana:
 
-- Acceso por rol y pestañas de navegación según permisos.
-- Inicio del estudiante con "Lo que sigue" (pendientes calculados de su expediente), regla de horas (0 a 500) y etapas: inicio, desarrollo y cierre.
-- Bandeja del personal con documentos por revisar, expedientes en pre-registro y expedientes listos para liberación.
-- Alta de estudiantes con apertura automática de expediente.
-- Entrega de documentos con validación de formato y tamaño, y alerta de folio duplicado.
-- Corrección de documentos recibidos, observados o rechazados; al guardar vuelven a revisión.
-- Descarga de documentos: cada estudiante solo descarga los de su expediente.
-- Revisión por el personal con observación obligatoria; la aprobación oficial es solo de Administración.
-- Reportes bimestrales (uno por periodo) que suman horas al expediente.
-- Cambio de estado del expediente; la liberación final es solo de Administración.
-- Bitácora agrupada por día.
-- Diseño adaptable a celular y escritorio, con foco visible para teclado.
+- **Revisa cada documento al entregarlo:** formato y tamaño, que el contenido sea realmente PDF/JPG/PNG (no solo la extensión), duplicados comparando la huella SHA-256 del archivo, que corresponda a la etapa actual y que no esté repetido. Si todo está bien queda **validado** al instante; si no, queda **observado** con el motivo exacto.
+- **Asigna folio y fecha** a cada documento.
+- **Evalúa los reportes bimestrales:** horas dentro del rango, actividades descritas y formato firmado válido. Al evaluarse se suman las horas.
+- **Asigna programa** según la carrera y el cupo disponible.
+- **Bloquea** expedientes con menos de 70% de créditos y los desbloquea solo cuando se corrigen.
+- **Calcula fechas:** inicio, plan de trabajo (20 días), vencimiento de cada reporte (cada 2 meses + 5 días) y término estimado (6 meses).
+- **Avanza el estado** del expediente según sus requisitos: Inicio, Desarrollo y Cierre (14 requisitos).
+- **Libera automáticamente** al cumplir todo, incluido el periodo mínimo de 6 meses, y genera la constancia en PDF con folio.
+- **Avisa:** resultados de revisiones y recordatorios de fechas próximas o vencidas (pestaña Avisos).
+
+**Solo pasa al personal (pestaña Excepciones):** archivos idénticos a los de otro estudiante, documentos de tipo "Otro", reportes con más de 250 horas, segundos intentos fallidos y créditos insuficientes. El inicio del personal muestra qué porcentaje de las decisiones tomó el sistema.
+
+## Publicar cambios con un clic
+
+El repositorio incluye `publicar.ps1` y una tarea de VS Code:
+
+1. Abre en VS Code la carpeta del repositorio.
+2. Presiona **Ctrl + Shift + B** (o escribe `.\publicar.ps1` en la terminal).
+3. El script hace `git add`, commit con fecha, `pull`, `push`, espera a que GitHub Pages publique y abre la página.
+
+Para poner un mensaje propio: `.\publicar.ps1 "Cambié los colores"`.
 
 ## Limitaciones de la versión estática
 
