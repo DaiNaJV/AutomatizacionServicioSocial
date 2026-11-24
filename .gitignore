@@ -1,9 +1,0 @@
-*.log
-*.tmp
-.DS_Store
-Thumbs.db
-.env
-uploads/*
-!uploads/.htaccess
-/vendor/
-/node_modules/
