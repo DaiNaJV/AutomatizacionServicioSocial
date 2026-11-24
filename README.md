@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Servicio Social en Línea — NexoTec
 
 Prototipo académico para organizar el seguimiento del Servicio Social del TecNM Campus Matehuala. Su interfaz toma como referencia patrones de navegación del SII del TecNM (encabezado institucional, menú lateral, tablas y estados de trámite), sin copiar su identidad gráfica ni conectarse a sus servicios.
@@ -61,3 +62,6 @@ La secuencia y los documentos exactos deben cotejarse con los formatos vigentes 
 - Mantén el repositorio privado mientras uses cuentas de demostración y datos de prueba.
 - No incluyas archivos reales de estudiantes, contraseñas, credenciales institucionales ni documentos privados.
 - La carpeta `uploads` se excluye mediante `.gitignore`; conserva únicamente su archivo `.htaccess`.
+=======
+# AutomatizacionServicioSocial
+>>>>>>> 1bfc5f4c56a551a3d25eb2bddb3e2509dc7dc4cc
