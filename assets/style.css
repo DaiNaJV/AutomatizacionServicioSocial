@@ -1,0 +1,393 @@
+/* NexoTec · Servicio Social en Línea
+   Identidad: carpeta de expediente (pestañas manila), sellos de goma en tinta violeta,
+   formato oficial gris frío. */
+
+:root{
+  --paper:#EEF1F5;      /* fondo: formato oficial */
+  --sheet:#FFFFFF;      /* hoja del expediente */
+  --ink:#1C2541;        /* texto principal */
+  --muted:#5A6378;
+  --rule:#D5DAE3;
+  --rule-soft:#E6E9EF;
+  --manila:#E9CB8E;     /* pestañas de carpeta */
+  --manila-edge:#C7A25B;
+  --manila-soft:#F6EBD3;
+  --stamp:#4338A8;      /* tinta de sello */
+  --stamp-soft:#ECEAFB;
+  --ok:#1F7A52;
+  --warn:#A35C00;
+  --bad:#B42318;
+  --neutral:#5A6378;
+
+  --display:'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body:'Public Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --r-sm:4px; --r-md:8px;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font:400 15px/1.55 var(--body); font-variant-numeric:tabular-nums;
+  min-height:100vh;
+}
+a{color:var(--stamp)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--stamp); outline-offset:2px; border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+h1,h2,h3{font-family:var(--display); line-height:1.1; margin:0; letter-spacing:-.01em}
+h1{font-size:clamp(28px,3.6vw,40px); font-weight:800}
+h2{font-size:22px; font-weight:700}
+h3{font-size:17px; font-weight:700}
+p{margin:0}
+
+/* ---------- Sello (logo y estados) ---------- */
+.seal{
+  width:44px;height:44px;border-radius:50%;
+  border:3px solid var(--stamp); color:var(--stamp);
+  display:grid;place-items:center; flex:none;
+  font:800 15px/1 var(--display); letter-spacing:.02em;
+  box-shadow:inset 0 0 0 2px var(--sheet), inset 0 0 0 3.5px var(--stamp);
+  transform:rotate(-8deg);
+}
+.stamp{
+  --c:var(--neutral);
+  display:inline-flex; align-items:center; gap:6px;
+  padding:3px 9px 2px; border:2px solid var(--c); border-radius:3px;
+  color:var(--c); background:color-mix(in srgb, var(--c) 7%, transparent);
+  font:700 11.5px/1.3 var(--display); letter-spacing:.09em; text-transform:uppercase;
+  white-space:nowrap; transform:rotate(var(--rot,-2deg));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--c) 35%, transparent);
+}
+.stamp.ok{--c:var(--ok)} .stamp.warn{--c:var(--warn)} .stamp.bad{--c:var(--bad)}
+.stamp.ink{--c:var(--stamp)} .stamp.neutral{--c:var(--neutral)}
+.stamp.big{font-size:15px; padding:6px 14px 5px; border-width:3px}
+
+/* ---------- Login ---------- */
+.login{
+  min-height:100vh; display:grid; grid-template-columns:1.15fr 1fr;
+}
+.login-hero{
+  position:relative; overflow:hidden; padding:48px clamp(24px,5vw,72px);
+  display:flex; flex-direction:column; gap:36px;
+  background:
+    linear-gradient(var(--paper),var(--paper)) padding-box;
+}
+.login-hero .brand{display:flex;align-items:center;gap:12px}
+.brand-name{font:800 20px/1 var(--display)}
+.brand-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.login-hero h1{font-size:clamp(34px,4.6vw,58px); max-width:13ch; line-height:1.02}
+.login-hero .lead{max-width:44ch; color:var(--muted); font-size:17px; margin-top:14px}
+
+/* La carpeta ilustrada */
+.folder{
+  position:relative; width:min(460px,100%); aspect-ratio:1.45; margin-top:auto;
+  filter:drop-shadow(0 18px 24px rgba(28,37,65,.14));
+}
+.folder-back{position:absolute; inset:14% 0 0 0; background:var(--manila-edge); border-radius:6px}
+.folder-back::before{
+  content:""; position:absolute; left:0; top:-13%; width:38%; height:16%;
+  background:var(--manila-edge); border-radius:6px 6px 0 0;
+}
+.folder-sheet{
+  position:absolute; inset:6% 6% 10% 6%; background:var(--sheet); border-radius:3px;
+  transform:rotate(-2.5deg); padding:7% 8%;
+  background-image:repeating-linear-gradient(transparent 0 23px, var(--rule-soft) 23px 24px);
+  background-position:0 44px;
+}
+.folder-sheet .line{height:8px; background:var(--rule); border-radius:4px; margin-bottom:12px}
+.folder-front{
+  position:absolute; inset:30% 0 0 0; background:var(--manila); border-radius:4px 4px 6px 6px;
+  padding:7% 8%; display:flex; flex-direction:column; justify-content:space-between;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.45);
+}
+.folder-label{
+  align-self:flex-start; background:var(--sheet); padding:8px 14px; border-radius:2px;
+  font:600 13px/1.35 var(--body); box-shadow:0 1px 0 rgba(0,0,0,.08);
+}
+.folder-label b{display:block; font:800 18px/1.2 var(--display)}
+.folder .stamp.hero{
+  position:absolute; right:8%; bottom:16%; --c:var(--stamp); --rot:-11deg;
+  font-size:clamp(18px,2.6vw,26px); padding:8px 18px 6px; border-width:4px; background:rgba(255,255,255,.35);
+  animation:thump .55s cubic-bezier(.2,.9,.3,1.3) .35s both;
+}
+@keyframes thump{
+  0%{opacity:0; transform:translateY(-40px) scale(1.6) rotate(-4deg)}
+  70%{opacity:1; transform:translateY(0) scale(.96) rotate(-11deg)}
+  100%{opacity:1; transform:scale(1) rotate(-11deg)}
+}
+
+.login-panel{
+  background:var(--sheet); display:flex; align-items:center; justify-content:center;
+  padding:48px clamp(20px,4vw,64px); border-left:1px solid var(--rule);
+}
+.login-card{width:min(400px,100%)}
+.login-card h2{font-size:28px; font-weight:800}
+.login-card > p{color:var(--muted); margin:8px 0 26px}
+.demo{margin-top:28px; border-top:1px solid var(--rule); padding-top:20px}
+.demo h3{font-size:15px; margin-bottom:4px}
+.demo p{color:var(--muted); font-size:13.5px; margin-bottom:12px}
+.demo-list{display:grid; gap:8px}
+.demo-btn{
+  display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;
+  text-align:left; padding:10px 14px; border:1px solid var(--rule); border-radius:var(--r-md);
+  background:var(--paper); cursor:pointer;
+}
+.demo-btn:hover{border-color:var(--stamp); background:var(--stamp-soft)}
+.demo-btn b{display:block; font-weight:600}
+.demo-btn small{color:var(--muted)}
+.fine{font-size:12.5px; color:var(--muted); margin-top:18px}
+
+/* ---------- Formularios ---------- */
+.form{display:grid; gap:14px}
+.form.cols{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.form .span{grid-column:1/-1}
+label.field{display:grid; gap:6px; font-size:13.5px; font-weight:600}
+label.field .hint{font-weight:400; color:var(--muted); font-size:12.5px}
+input:not([type=file]),select,textarea{
+  width:100%; padding:10px 12px; border:1px solid #BCC3D0; border-radius:var(--r-sm);
+  background:var(--sheet); font-weight:400; font-size:15px;
+}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--stamp); box-shadow:0 0 0 3px var(--stamp-soft)}
+input[type=file]{font-size:14px; padding:8px; border:1px dashed #BCC3D0; border-radius:var(--r-sm); background:var(--paper); width:100%}
+textarea{resize:vertical; min-height:84px}
+.form-end{display:flex; justify-content:flex-end; gap:10px; grid-column:1/-1}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:10px 18px; border-radius:var(--r-sm); border:1px solid var(--ink);
+  background:var(--sheet); color:var(--ink); font-weight:600; cursor:pointer; text-decoration:none;
+  transition:background .15s, transform .08s;
+}
+.btn:hover{background:var(--paper)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--stamp); border-color:var(--stamp); color:#fff}
+.btn.primary:hover{background:#372D93}
+.btn.small{padding:6px 12px; font-size:13.5px}
+.btn.ghost{border-color:transparent; background:transparent; color:var(--stamp)}
+.btn.ghost:hover{background:var(--stamp-soft)}
+.btn.full{width:100%; padding:12px 18px}
+
+/* ---------- Estructura de la app ---------- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  max-width:1240px; margin:0 auto; padding:20px 28px 14px;
+}
+.topbar .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit}
+.who{display:flex; align-items:center; gap:14px}
+.who-text{text-align:right; line-height:1.25}
+.who-text b{display:block; font-weight:600}
+.who-text small{color:var(--muted)}
+
+/* pestañas de carpeta */
+.tabs{
+  max-width:1240px; margin:0 auto; padding:0 28px;
+  display:flex; gap:4px; overflow-x:auto; scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:none; position:relative; padding:11px 22px 10px; text-decoration:none;
+  color:var(--ink); font-weight:600; font-size:14.5px;
+  background:var(--manila-soft); border:1px solid var(--manila-edge); border-bottom:none;
+  border-radius:9px 9px 0 0; top:1px;
+}
+.tab:hover{background:#F1DFB8}
+.tab[aria-current=page]{background:var(--manila); z-index:2; padding-top:13px; margin-top:-2px}
+.tab .count{
+  display:inline-grid; place-items:center; min-width:20px; height:20px; padding:0 6px; margin-left:6px;
+  border-radius:10px; background:var(--bad); color:#fff; font-size:11.5px; font-weight:700;
+}
+
+.folder-body{
+  max-width:1240px; margin:0 auto; padding:0 28px 40px;
+}
+.folder-wrap{
+  background:var(--manila); border:1px solid var(--manila-edge); border-radius:0 10px 10px 10px;
+  padding:10px;
+}
+.sheet{
+  background:var(--sheet); border-radius:6px; padding:clamp(20px,3vw,40px);
+  box-shadow:0 1px 0 var(--manila-edge);
+  min-height:60vh;
+}
+.page-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-bottom:28px}
+.page-head p{color:var(--muted); margin-top:8px; max-width:62ch}
+
+.section{margin-top:36px}
+.section:first-child{margin-top:0}
+.section-head{display:flex; justify-content:space-between; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--ink)}
+.section-head p{color:var(--muted); font-size:14px}
+.grid-2{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:36px}
+.grid-2-1{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:36px}
+
+.box{border:1px solid var(--rule); border-radius:var(--r-md); padding:20px}
+.box.tint{background:var(--paper); border-color:transparent}
+
+/* ---------- Saludo del estudiante ---------- */
+.hello{display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start}
+.hello .stamp{justify-self:start}
+.hello h1{margin-bottom:8px}
+.hello p{color:var(--muted); max-width:58ch}
+.next{
+  margin-top:24px; border-left:4px solid var(--stamp); background:var(--stamp-soft);
+  padding:14px 18px; border-radius:0 var(--r-md) var(--r-md) 0;
+}
+.next h3{font-size:15px; margin-bottom:6px}
+.next ul{margin:0; padding-left:18px}
+.next li{margin:3px 0}
+
+/* regla de horas */
+.ruler{margin-top:8px}
+.ruler-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px}
+.ruler-top b{font:800 34px/1 var(--display)}
+.ruler-top b small{font:600 16px var(--body); color:var(--muted)}
+.ruler-bar{
+  position:relative; height:34px; border:1.5px solid var(--ink); border-radius:3px; overflow:hidden;
+  background:
+    repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 2%) bottom/100% 9px no-repeat,
+    repeating-linear-gradient(90deg, var(--ink) 0 1.5px, transparent 1.5px 10%) bottom/100% 16px no-repeat,
+    var(--sheet);
+}
+.ruler-fill{position:absolute; inset:0 auto 0 0; background:color-mix(in srgb, var(--stamp) 22%, transparent); border-right:3px solid var(--stamp)}
+.ruler-scale{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:4px}
+
+/* etapas (secuencia real) */
+.stages{display:grid; grid-template-columns:repeat(3,1fr); gap:0; counter-reset:st; border:1px solid var(--rule); border-radius:var(--r-md); overflow:hidden}
+.stage{padding:18px 20px; position:relative; border-right:1px solid var(--rule)}
+.stage:last-child{border-right:none}
+.stage .n{
+  width:30px; height:30px; border-radius:50%; display:grid; place-items:center; margin-bottom:10px;
+  border:2px solid var(--rule); font:800 14px var(--display); color:var(--muted);
+}
+.stage.done .n{background:var(--ok); border-color:var(--ok); color:#fff}
+.stage.now{background:var(--stamp-soft)}
+.stage.now .n{border-color:var(--stamp); color:var(--stamp)}
+.stage h3{margin-bottom:6px}
+.stage p{color:var(--muted); font-size:14px}
+.stage .state{position:absolute; top:18px; right:18px; font-size:12.5px; font-weight:600; color:var(--muted)}
+.stage.done .state{color:var(--ok)} .stage.now .state{color:var(--stamp)}
+
+/* datos del expediente */
+.facts{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:0; border-top:1px solid var(--rule)}
+.fact{padding:12px 0; border-bottom:1px solid var(--rule); padding-right:12px}
+.fact dt{font-size:12.5px; color:var(--muted)}
+.fact dd{margin:2px 0 0; font-weight:600}
+dl{margin:0}
+
+/* ---------- Listas de documentos ---------- */
+.docs{display:grid; gap:0; border-top:1px solid var(--rule)}
+.doc{display:grid; grid-template-columns:42px minmax(0,1fr) auto; gap:14px; align-items:start; padding:16px 0; border-bottom:1px solid var(--rule)}
+.doc-ico{
+  width:36px; height:44px; border:1.5px solid var(--ink); border-radius:2px 10px 2px 2px; position:relative;
+  display:grid; place-items:end center; padding-bottom:5px; font:700 9px var(--display); letter-spacing:.06em;
+}
+.doc-main b{display:block; font-weight:600; overflow-wrap:anywhere}
+.doc-meta{font-size:13px; color:var(--muted)}
+.doc-note{font-size:13.5px; margin-top:6px; padding:6px 10px; background:var(--paper); border-radius:var(--r-sm)}
+.doc-note.warn{background:#FBF1E2; color:#6B3D00}
+.doc-side{display:grid; justify-items:end; gap:10px}
+.doc-actions{display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end}
+details.edit{grid-column:2/-1}
+details.edit summary{cursor:pointer; color:var(--stamp); font-weight:600; font-size:14px; list-style:none; display:inline-block}
+details.edit summary::-webkit-details-marker{display:none}
+details.edit[open] summary{margin-bottom:12px}
+details.edit .form{background:var(--paper); padding:16px; border-radius:var(--r-md)}
+
+/* ---------- Tablas ---------- */
+.table-wrap{overflow-x:auto; border:1px solid var(--rule); border-radius:var(--r-md)}
+table{width:100%; border-collapse:collapse; font-size:14.5px}
+th{text-align:left; font-size:12.5px; font-weight:600; color:var(--muted); background:var(--paper); padding:10px 14px; border-bottom:1px solid var(--rule); white-space:nowrap}
+td{padding:14px; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td b{font-weight:600; display:block}
+td small{display:block; color:var(--muted); font-size:13px}
+.inline{display:flex; gap:8px; flex-wrap:wrap; align-items:center; min-width:300px}
+.inline select{width:auto; min-width:150px}
+.inline input{flex:1; min-width:140px}
+.pct{font-weight:600}
+.pct.low{color:var(--bad)}
+
+/* ---------- Bandeja / pendientes ---------- */
+.tray{display:grid; gap:10px}
+.tray a{
+  display:grid; grid-template-columns:52px 1fr auto; align-items:center; gap:14px;
+  padding:14px 16px; border:1px solid var(--rule); border-radius:var(--r-md); text-decoration:none; color:inherit;
+}
+.tray a:hover{border-color:var(--stamp); background:var(--stamp-soft)}
+.tray .num{font:800 30px/1 var(--display); text-align:center}
+.tray .num.zero{color:var(--rule)}
+.tray b{font-weight:600}
+.tray small{display:block; color:var(--muted)}
+.tray .go{color:var(--stamp); font-weight:600; font-size:14px}
+
+/* ---------- Bitácora ---------- */
+.log{list-style:none; margin:0; padding:0; position:relative}
+.log::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:var(--rule)}
+.log li{position:relative; padding:0 0 18px 28px}
+.log li::before{content:""; position:absolute; left:0; top:5px; width:14px; height:14px; border-radius:50%; background:var(--sheet); border:2px solid var(--stamp)}
+.log b{font-weight:600; display:block}
+.log small{color:var(--muted); font-size:13px}
+.log-day{font:700 13px var(--display); color:var(--muted); margin:6px 0 12px 28px}
+
+.empty{padding:28px; text-align:center; color:var(--muted); border:1.5px dashed var(--rule); border-radius:var(--r-md)}
+.empty b{display:block; color:var(--ink); margin-bottom:4px}
+
+.filters{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px}
+.chip{padding:6px 12px; border:1px solid var(--rule); border-radius:20px; background:var(--sheet); cursor:pointer; font-size:13.5px; font-weight:600}
+.chip[aria-pressed=true]{background:var(--ink); color:#fff; border-color:var(--ink)}
+
+/* ---------- Pie ---------- */
+.foot{max-width:1240px; margin:0 auto; padding:0 28px 32px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+.foot button{background:none; border:none; color:var(--muted); text-decoration:underline; cursor:pointer; padding:0; font-size:13px}
+.foot button:hover{color:var(--bad)}
+
+/* ---------- Avisos ---------- */
+#toasts{position:fixed; right:20px; bottom:20px; display:grid; gap:10px; z-index:50; max-width:min(380px,calc(100vw - 40px))}
+.toast{
+  background:var(--ink); color:#fff; padding:12px 16px; border-radius:var(--r-md);
+  border-left:5px solid var(--ok); box-shadow:0 10px 30px rgba(28,37,65,.25);
+  animation:toastIn .25s ease-out;
+}
+.toast.error{border-left-color:#F97066}
+.toast.warn{border-left-color:#F5B544}
+@keyframes toastIn{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+
+.notice{font-size:13.5px; color:var(--muted); margin-top:14px}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .grid-2,.grid-2-1{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .login{grid-template-columns:1fr}
+  .login-hero{padding-bottom:24px}
+  .folder{width:min(360px,100%); margin-top:0}
+  .login-panel{border-left:none; border-top:1px solid var(--rule)}
+}
+@media (max-width:680px){
+  body{font-size:14.5px}
+  .topbar{padding:16px 16px 12px}
+  .who-text,.topbar .brand-sub{display:none !important}
+  .tabs,.folder-body,.foot{padding-left:12px; padding-right:12px}
+  .tab{padding:10px 14px 9px; font-size:14px}
+  .folder-wrap{padding:6px}
+  .stages{grid-template-columns:1fr}
+  .stage{border-right:none; border-bottom:1px solid var(--rule)}
+  .stage:last-child{border-bottom:none}
+  .hello{grid-template-columns:1fr}
+  .doc{grid-template-columns:36px minmax(0,1fr)}
+  .doc-side{grid-column:2; justify-items:start}
+  .doc-actions{justify-content:flex-start}
+  .tray a{grid-template-columns:40px 1fr}
+  .tray .go{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important}
+}
+@media print{
+  .tabs,.topbar .who,.foot,#toasts{display:none}
+  body{background:#fff}
+  .folder-wrap{background:none;border:none;padding:0}
+}
